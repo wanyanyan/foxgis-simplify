@@ -6,8 +6,7 @@
     <div class="header-top">
       <div class="header">
         <div class="base-title">
-          <span>辅助决策用图服务系统</span>
-          <span>|在线制图编辑</span>
+          <span>基础地理信息数据库展示系统</span>
         </div>
       </div>
     </div>
