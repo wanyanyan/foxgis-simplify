@@ -1,8 +1,7 @@
 <template>
 <div>
   <foxgis-layout>
-  <div class="content">
-    <div class="layout-container">
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-drawer">
       <div class="mdl-layout__drawer">
         <nav class="mdl-navigation">
           <a class="mdl-navigation__link" v-link="{ path: '/maps' }">
@@ -26,8 +25,6 @@
         <router-view></router-view>
       </div>
     </div>
-    <!-- <foxgis-footer></foxgis-footer> -->
-  </div>
   </foxgis-layout>
 </div>
 </template>
@@ -208,88 +205,40 @@ export default {
     }
   }
 }
-
 </script>
 
 
 <style scoped>
-.layout-container{
-  position: relative;
-  width: 1100px;
-  /* background-color: white; */
-  margin: 10px auto;
-}
-.mdl-layout__drawer{
-  width: 200px;
-  display: block;
-  position: absolute;
-  overflow: initial;
-  /* float: left; */
-  -webkit-transform: inherit;
-  transform: inherit;
-  box-shadow: none;
-  z-index: initial;
-  background-color: transparent;
-}
-.mdl-layout__content{
-  width: 895px;
-  display: block;
-  clear:both;
-  float: right;
-  position: initial;
-  /* position: relative;
-  bottom: 252px; */
-}
-.content>.mdl-layout__content {
+.mdl-layout--fixed-drawer>.mdl-layout__content {
   background-color: #e4e4e4;
 }
 
-.mdl-layout__drawer .mdl-navigation{
-  padding: 0;
-  background-color: white;
+.mdl-navigation {
+  border-top: 1px solid rgba(0,0,0,.1);
 }
-.mdl-layout__drawer .mdl-navigation .mdl-navigation__link{
-  padding: 8px 7px;
-  color: #5d5d5d;
+
+.mdl-navigation a {
   cursor: pointer;
-  border-bottom: 1px solid rgba(0,0,0,.1);
-}
-.mdl-layout__drawer .mdl-navigation .v-link-active {
-  color: #2f80bc;
-}
-.mdl-layout__drawer .mdl-navigation .mdl-navigation__link:hover {
-  background-color: #ffffff;
-  color: #2f80bc;
 }
 
 .material-icons {
   padding-right: 10px;
 }
 
+.v-link-active {
+  background-color: #e0e0e0;
+}
+
 .mdl-badge {
   position: absolute;
   white-space: nowrap;
-  margin-right: 5px;
+  margin-right: 24px;
   right: 76px;
 }
-.mdl-layout__drawer .mdl-navigation .v-link-active .mdl-badge[data-badge]:after{
-  background-color: #2f80bc;
-}
-.mdl-layout__drawer .mdl-navigation .mdl-navigation__link:hover .mdl-badge[data-badge]:after{
-  background-color: #2f80bc;
-}
-.mdl-badge[data-badge]:after{
-  width: 22px;
-  height: 20px;
-  border-radius: 3px;
-  background: #9a9a9a;
-  color: #fff;
-  font-family: inherit;
-}
+
 .mdl-badge:after {
-  top: 1px!important;  
+  top: -3px!important;  
   right: -70px!important;
 }
-
 </style>
 

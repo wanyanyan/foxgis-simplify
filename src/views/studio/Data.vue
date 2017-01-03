@@ -143,10 +143,11 @@ export default {
 <style scoped>
 .data {
   height: 100%;
-  width: 862px;
+  width: 83.3333%;
   max-width: 1000px;
   margin-left: auto;
   margin-right: auto;
+  margin-top: 16px;
 }
 
 h5 {
