@@ -7,7 +7,7 @@
  
 /* 
  *	@创建者：万炎炎
- *	@主要功能：添加比例尺按钮及相关函数
+ *	@主要功能：添加图例按钮及相关函数
  */
 
 svgEditor.addExtension('ext-legend', function() {
