@@ -9,12 +9,6 @@
           <span>辅助决策用图服务系统</span>
           <span>|在线制图编辑</span>
         </div>
-        <div class="contact-us" id="map-header-contact">
-          <a href="javascript:void(0);">关于我们 </a>|
-          <a href="javascript:void(0);">意见反馈 </a>|
-          <a href="javascript:void(0);">联系我们 </a>|
-          <a href="/static/document/用户手册.doc">帮助</a>
-        </div>
       </div>
     </div>
     <nav class="mdl-navigation" id="main-control">
@@ -203,23 +197,12 @@ export default {
         var width = parseInt(se.x-nw.x);
         var height = parseInt(se.y-nw.y);
         this.printAction({status:'ok',zoom:zoom,center:center,width:width,height:height,bearing:bearing,pitch:pitch})
-        /*this.dialogcontent.title="输出级别";
-        this.dialogcontent.type="zoom";
-        var currZoom = parseInt(this.$refs.drafmap.map.getZoom());
-        this.dialogcontent.value = currZoom;
-        $("#layout-zoom").show();*/
-
       }
     },
     printAction:function(params){
       if(params.status==="cancel"){
         return;
       }
-      /*var zoom = Number(params.value);
-      if(isNaN(zoom)||zoom===0){
-        this.$broadcast("mailSent",{message:"输入错误，请重新输入",timeout:3000});
-        return;
-      }*/
       var controlBound = this.$refs.drafmap.controlBound;
       var options = {
         API:SERVER_API,
@@ -400,17 +383,6 @@ export default {
 .base-title span:last-child{
   color: #b1b1b1;
   font-family: SimHei;
-}
-.contact-us{
-  position: absolute;
-  color: #b1b1b1;
-  right: 200px;
-}
-
-.contact-us a{
-  color: #b1b1b1;
-  text-decoration: none;
-  font-size: 14px;
 }
 
 #main-control .btm{

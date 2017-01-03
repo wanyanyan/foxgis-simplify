@@ -36,6 +36,7 @@
 </template>
 
 <script>
+import mapboxgl from 'mapbox-gl/dist/mapbox-gl.js';
 import MapboxDraw from 'gl-draw-foxgis'
 import { diff, validate} from 'mapbox-gl-style-spec'
 import { changeStyle } from '../../vuex/actions'
@@ -445,7 +446,7 @@ export default {
       }
       var info = this.$el.querySelector("#info-container");
       info.style.display = 'none';
-      window.location.href = "#!/studio/maps";
+      window.location.href = "#!/maps";
     },
     'style-save':function(style){
       var newStyle = JSON.parse(JSON.stringify(style));

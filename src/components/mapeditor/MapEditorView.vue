@@ -381,7 +381,7 @@ export default {
         var info = this.$el.querySelector("#info-container");
         info.style.display = 'none';
       }
-      window.location.href = "#!/studio/maps";
+      window.location.href = "#!/maps";
     },
     'style-save':function(style){
       var newStyle = JSON.parse(JSON.stringify(style));

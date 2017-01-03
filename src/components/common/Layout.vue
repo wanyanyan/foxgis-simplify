@@ -7,11 +7,6 @@
           <div class="base-title">
             <span>基础地理信息数据库展示系统</span>
           </div>
-          <div class="contact-us">
-            <a href="javascript:void(0);">关于我们 </a>|
-            <a href="javascript:void(0);">意见反馈 </a>|
-            <a href="javascript:void(0);">联系我们 </a>|
-          </div>
         </div>
       </div>
     </header>
@@ -97,18 +92,6 @@ export default {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent; */
   font-size: 40px;
-}
-.contact-us{
-  color: #b1b1b1;
-  float: right;
-  margin-right: 10px;
-  margin-top: 40px;
-}
-
-.contact-us a{
-  color: #b1b1b1;
-  text-decoration: none;
-  font-size: 14px;
 }
 
 .mdl-layout.has-drawer .mdl-layout__header > .mdl-layout-icon {

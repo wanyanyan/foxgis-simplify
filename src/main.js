@@ -11,8 +11,6 @@ import Resource from 'vue-resource'
 import VueMdl from 'vue-mdl'
 
 import App from './views/App'
-import Login from './views/Login'
-import Register from './views/Register'
 import Studio from './views/Studio'
 import MapEditor from './views/MapEditor'
 import DataEditor from './views/DataEditor'
@@ -104,27 +102,12 @@ let router = new Router({
 })
 
 router.map({
-  '/': {
-    component: function (resolve) {
-      require(['./views/Login.vue'], resolve)
-    }
-  },
-  '/login': {
-    component: function (resolve) {
-      require(['./views/Login.vue'], resolve)
-    }
-  },
-  '/register': {
-    component: function (resolve) {
-      require(['./views/Register.vue'], resolve)
-    }
-  },
   '/user':{
     component:function (resolve) {
       require(['./views/User.vue'], resolve)
     }
   },
-  '/studio': {
+  '/': {
     component: function (resolve) {
       require(['./views/Studio.vue'], resolve)
     },

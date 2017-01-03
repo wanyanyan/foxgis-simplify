@@ -5,19 +5,19 @@
     <div class="layout-container">
       <div class="mdl-layout__drawer">
         <nav class="mdl-navigation">
-          <a class="mdl-navigation__link" v-link="{ path: '/studio/maps' }">
+          <a class="mdl-navigation__link" v-link="{ path: '/maps' }">
             <i class="material-icons">map</i>制图工程<span v-mdl-badge.number="map_nums"></span>
           </a>
-          <a class="mdl-navigation__link" v-link="{ path: '/studio/tile' }">
+          <a class="mdl-navigation__link" v-link="{ path: '/tile' }">
             <i class="material-icons">layers</i>瓦片集<span v-mdl-badge.number="tileset_nums"></span>
           </a>
-          <a class="mdl-navigation__link" v-link="{ path: '/studio/data' }">
+          <a class="mdl-navigation__link" v-link="{ path: '/data' }">
             <i class="material-icons">public</i>数据集<span v-mdl-badge.number="dataset_nums"></span>
           </a>
-          <a class="mdl-navigation__link" v-link="{ path: '/studio/fonts' }">
+          <a class="mdl-navigation__link" v-link="{ path: '/fonts' }">
             <i class="material-icons">text_format</i>字体<span v-mdl-badge.number="font_nums"></span>
           </a>
-          <a class="mdl-navigation__link" v-link="{ path: '/studio/sprites' }">
+          <a class="mdl-navigation__link" v-link="{ path: '/sprites' }">
             <i class="material-icons">place</i>符号库<span v-mdl-badge.number="sprite_nums"></span>
           </a>
         </nav>
@@ -44,59 +44,135 @@ export default {
     /*global componentHandler */
     componentHandler.upgradeElement(this.$el.firstElementChild);
   },
+  login:function(){
+    var url = SERVER_API.users;
+    var username = "geoway";
+    var password = "123456";
+    url += '/'+username;
+    this.$http.post(url,{'username':username,'password':password}).then(function(response){
+      loginbutton.disabled = false;
+      var data = response.data;
+      var access_token = data.access_token;
+      var username = data.username;
+      var name = data.name;
+      var email = data.email;
+      var phone = data.phone;
+      var organization = data.organization;
+      var location = data.location;
+      var role = data.role;
+      var days = 0;
+
+      Cookies.set('access_token',access_token);
+      Cookies.set('username',username);
+      if(name!=undefined){
+        Cookies.set('name',name);
+      }
+      if(email!=undefined){
+        Cookies.set('email',email);
+      }
+      if(phone!=undefined){
+        Cookies.set('phone',phone);
+      }
+      if(location!=undefined){
+        Cookies.set('location',location);
+      }
+      if(organization!=undefined){
+        Cookies.set('organization',organization);
+      }
+      if(role!=undefined){
+        Cookies.set('role',role);
+      }
+    },function(response){
+      loginbutton.disabled = false;
+      this.showError('用户名或密码错误');
+    })
+  },
   attached: function() {
-     //判断是否登陆
-    var username = Cookies.get('username');
-    if(username === undefined){
-      window.location.href = "#!/login";
-    }else{
+    var url = SERVER_API.users;
+    var username = "geoway";
+    var password = "123456";
+    url += '/'+username;
+    this.$http.post(url,{'username':username,'password':password}).then(function(response){
+      var data = response.data;
+      var access_token = data.access_token;
+      var username = data.username;
+      var name = data.name;
+      var email = data.email;
+      var phone = data.phone;
+      var organization = data.organization;
+      var location = data.location;
+      var role = data.role;
+      var days = 0;
+
+      Cookies.set('access_token',access_token);
+      Cookies.set('username',username);
+      if(name!=undefined){
+        Cookies.set('name',name);
+      }
+      if(email!=undefined){
+        Cookies.set('email',email);
+      }
+      if(phone!=undefined){
+        Cookies.set('phone',phone);
+      }
+      if(location!=undefined){
+        Cookies.set('location',location);
+      }
+      if(organization!=undefined){
+        Cookies.set('organization',organization);
+      }
+      if(role!=undefined){
+        Cookies.set('role',role);
+      }
       this.username = username;
-    }
-    var access_token = Cookies.get('access_token');
-    var tileset_url = SERVER_API.tilesets + '/' + username;
-    var dataset_url = SERVER_API.datasets + '/' + username;
-    var fonts_url = SERVER_API.fonts + '/' + username;
-    var sprites_url = SERVER_API.sprites + '/' + username;
-    var maps_url = SERVER_API.styles+'/' + username;
+      var tileset_url = SERVER_API.tilesets + '/' + username;
+      var dataset_url = SERVER_API.datasets + '/' + username;
+      var fonts_url = SERVER_API.fonts + '/' + username;
+      var sprites_url = SERVER_API.sprites + '/' + username;
+      var maps_url = SERVER_API.styles+'/' + username;
 
-    this.$http({url: maps_url, method: 'GET', headers: { 'x-access-token': access_token } })
-    .then(function(response) {
-      var data = response.data;
-      this.map_nums = data.length;
+      this.$http({url: maps_url, method: 'GET', headers: { 'x-access-token': access_token } })
+      .then(function(response) {
+        var data = response.data;
+        this.map_nums = data.length;
+      },function(response){
+
+      });
+
+      this.$http({url: tileset_url, method: 'GET', headers: {'x-access-token': access_token}})
+      .then(function(response) {
+        var data = response.data;
+        this.tileset_nums = data.length;
+      },function(response){
+
+      });
+
+      this.$http({url: dataset_url, method: 'GET', headers: {'x-access-token': access_token}})
+      .then(function(response) {
+        var data = response.data;
+        this.dataset_nums = data.length;
+      },function(response){
+
+      });
+
+      this.$http({url: fonts_url, method: 'GET', headers: {'x-access-token': access_token}})
+      .then(function(response) {
+        var data = response.data;
+        this.font_nums = data.length;
+      },function(response){
+
+      });
+
+      this.$http({url: sprites_url, method: 'GET', headers: {'x-access-token': access_token}})
+      .then(function(response) {
+        var data = response.data;
+        this.sprite_nums = data.length;
+      },function(response){
+
+      });
     },function(response){
-
-    });
-
-    this.$http({url: tileset_url, method: 'GET', headers: {'x-access-token': access_token}})
-    .then(function(response) {
-      var data = response.data;
-      this.tileset_nums = data.length;
-    },function(response){
-
-    });
-
-    this.$http({url: dataset_url, method: 'GET', headers: {'x-access-token': access_token}})
-    .then(function(response) {
-      var data = response.data;
-      this.dataset_nums = data.length;
-    },function(response){
-
-    });
-
-    this.$http({url: fonts_url, method: 'GET', headers: {'x-access-token': access_token}})
-    .then(function(response) {
-      var data = response.data;
-      this.font_nums = data.length;
-    },function(response){
-
-    });
-
-    this.$http({url: sprites_url, method: 'GET', headers: {'x-access-token': access_token}})
-    .then(function(response) {
-      var data = response.data;
-      this.sprite_nums = data.length;
-    },function(response){
-
+      loginbutton.disabled = false;
+      this.showError('用户名或密码错误');
     });
   },
   data: function(){
