@@ -93,7 +93,7 @@ export default {
         }
         
         //跳转不好处理，所以统一跳转到首页
-        window.location.href = '#!/studio';
+        window.location.href = '#!/studio/maps';
       },function(response){
         loginbutton.disabled = false;
         this.showError('用户名或密码错误');

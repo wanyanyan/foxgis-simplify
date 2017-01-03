@@ -31,18 +31,27 @@
     <div id="layer-control" v-on:drop="eledrop" v-on:dragover.prevent="eledragover">
       <div class="layer" v-for="layer in tocLayers" id="layer_{{$index}}" draggable="true" v-on:dragstart="eledragstart" v-on:dragenter.prevent="eledragenter">
         <a>
-          <label for="{{$index}}" v-on:click="checkSublayer(layer.id,$index,$event)" title="{{layer.id}}">
+          <label for="{{$index}}" v-on:click.stop="checkSublayer(layer.id,$index,$event)" title="{{layer.id}}">
             <i class="material-icons" v-if="layer.collapsed==true">keyboard_arrow_right</i>
             <i class="material-icons" v-if="layer.collapsed==false">keyboard_arrow_down</i>
             <i class="material-icons" v-if="layer.items!==undefined">folder</i>
             <i class="type-icon {{layer.type}}" v-if="layer.items==undefined"></i>
             <span>{{layer.id}}</span>
           </label>
+          <div class="visibility">
+            <mdl-switch :checked.sync="false" v-if="layer.visibility=='none'" v-on:change='visibilityChange(layer,$index,$event)' data-name="{{name}}" data-type='layout' ></mdl-switch>
+            <mdl-switch :checked.sync="true" v-else v-on:change='visibilityChange(layer,$index,$event)' data-name="{{name}}" data-type='layout' ></mdl-switch>
+          </div>
           <div v-if="layer.items!==undefined" class="sublayer" v-show="layer.collapsed==false">
             <div v-for="item in layer.items" v-on:click="showPropertyPanel(item.id)" title="{{item.id}}" name="{{item.id}}" id="sublayer_{{item.id}}" v-on:dragstart="eledragstart" v-on:dragenter.prevent.stop="eledragenter" class="sublayer-item" draggable="true" v-on:mouseover="sublayerMouseover" v-on:mouseleave="sublayerMouseleave">
               <i class="type-icon {{item.type}}"></i>
               <span name="{{item.id}}">{{item.id}}</span>
+              <div class="visibility">
+                <mdl-switch :checked.sync="false" v-if="item.visibility=='none'" v-on:change='visibilityChange(item,$index,$event)' data-name="{{name}}" data-type='layout' ></mdl-switch>
+                <mdl-switch :checked.sync="true" v-else v-on:change='visibilityChange(item,$index,$event)' data-name="{{name}}" data-type='layout' ></mdl-switch>
+              </div>
             </div>
+            
           </div>
         </a>
       </div>
@@ -520,6 +529,7 @@ export default {
       for(let i=0,length=layers.length;i<length;i++){
         var layer = layers[i];
         this.fixType(layer);
+        layer.visibility = layer.layout?(layer.layout.visibility?layer.layout.visibility:'visible'):'visible';
         if(layer['metadata']&&layer['metadata']['mapbox:group']){
           var layername = groups[layer['metadata']['mapbox:group']].name;
           var collapsed = groups[layer['metadata']['mapbox:group']].collapsed;
@@ -528,10 +538,14 @@ export default {
           }else{
             layerIndex++;
             mylayers[layerIndex] = {};
+            mylayers[layerIndex]['visibility'] = 'none';
             mylayers[layerIndex]['items'] = [];
             mylayers[layerIndex]['id'] = layername;
             mylayers[layerIndex]['collapsed'] = collapsed;
             mylayers[layerIndex]['items'].push(layer);
+          }
+          if(!layer.layout||layer.layout.visibility!=="none"){
+            mylayers[layerIndex]['visibility'] = 'visible';
           }
         }else{
           layerIndex++;
@@ -580,6 +594,37 @@ export default {
         layers.splice(currFolder_index[currFolder_index.length-1]+1,1,tem);
       }
       var data = JSON.parse(JSON.stringify(this.styleObj))
+      this.changeStyle(data);
+    },
+    //图层可见控制
+    visibilityChange:function(layer,index,e){
+      var layers = this.styleObj.layers;
+      var value = e.target.checked;
+      if(layer.items){
+        for(let j=0;j<layer.items.length;j++){
+          for(let i=0,length=layers.length;i<length;i++){
+            if(layers[i].id === layer.items[j].id){
+              if(!layers[i].layout){
+                layers[i].layout = {};
+              }
+              layers[i].layout.visibility = value?'visible':'none';
+              break;
+            }
+          }
+        }
+      }else{
+        for(let i=0,length=layers.length;i<length;i++){
+          if(layers[i].id === layer.id){
+            if(!layers[i].layout){
+              layers[i].layout = {};
+            }
+            layers[i].layout.visibility = value?'visible':'none';
+            break;
+          }
+        }
+      }
+      
+      var data = JSON.parse(JSON.stringify(this.styleObj));
       this.changeStyle(data);
     },
     //点击图层列表时，显示当前图层的属性设置面板
@@ -1672,6 +1717,10 @@ export default {
   clear: both;
 }
 
+#layer-control .visibility{
+  width: 50px;
+  float: right;
+}
 .type-icon:before{
   font-family: icon;
   font-style: normal;
@@ -1707,7 +1756,7 @@ a {
 .layer {
   vertical-align: middle;
   border:0;
-  margin: 5px 0;
+  margin: 15px 0;
   box-sizing: border-box;
 }
 
@@ -1724,11 +1773,6 @@ a {
 
 .layerover {
   border-top: #ff4081 1px solid;
-}
-
-.layer label {
-  width:100%;
-  display: block;
 }
 
 .layer a label{
@@ -1750,7 +1794,7 @@ a {
   margin-left: 20px;
 }
 
-.sublayer div {
+.sublayer .sublayer-item {
   white-space: nowrap;
   text-overflow:ellipsis;
   overflow:hidden;
