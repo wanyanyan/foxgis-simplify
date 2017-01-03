@@ -321,7 +321,7 @@ export default {
         this.map.remove();
         this.map ={};
       }
-      window.location.href = "#!/studio/data";
+      window.location.href = "#!/data";
     }
   },
   events: {
