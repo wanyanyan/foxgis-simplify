@@ -43,9 +43,11 @@
             <mdl-switch :checked.sync="true" v-else v-on:change='visibilityChange(layer,$index,$event)' data-name="{{name}}" data-type='layout' ></mdl-switch>
           </div>
           <div v-if="layer.items!==undefined" class="sublayer" v-show="layer.collapsed==false">
-            <div v-for="item in layer.items" v-on:click="showPropertyPanel(item.id)" title="{{item.id}}" name="{{item.id}}" id="sublayer_{{item.id}}" v-on:dragstart="eledragstart" v-on:dragenter.prevent.stop="eledragenter" class="sublayer-item" draggable="true" v-on:mouseover="sublayerMouseover" v-on:mouseleave="sublayerMouseleave">
-              <i class="type-icon {{item.type}}"></i>
-              <span name="{{item.id}}">{{item.id}}</span>
+            <div v-for="item in layer.items" title="{{item.id}}" name="{{item.id}}" id="sublayer_{{item.id}}" v-on:dragstart="eledragstart" v-on:dragenter.prevent.stop="eledragenter" class="sublayer-item" draggable="true" v-on:mouseover="sublayerMouseover" v-on:mouseleave="sublayerMouseleave">
+              <label for="{{$index}}" v-on:click.stop="showPropertyPanel(item.id)" title="{{layer.id}}">
+                <i class="type-icon {{item.type}}"></i>
+                <span name="{{item.id}}">{{item.id}}</span>
+              </label>
               <div class="visibility">
                 <mdl-switch :checked.sync="false" v-if="item.visibility=='none'" v-on:change='visibilityChange(item,$index,$event)' data-name="{{name}}" data-type='layout' ></mdl-switch>
                 <mdl-switch :checked.sync="true" v-else v-on:change='visibilityChange(item,$index,$event)' data-name="{{name}}" data-type='layout' ></mdl-switch>
@@ -1756,7 +1758,7 @@ a {
 .layer {
   vertical-align: middle;
   border:0;
-  margin: 15px 0;
+  margin: 10px 0;
   box-sizing: border-box;
 }
 
@@ -1781,6 +1783,11 @@ a {
   overflow:hidden;
 }
 
+.layer a>label{
+    width: calc(100% - 50px);
+    display: inline-block;
+}
+
 .layer i {
   font-size: 16px;
   vertical-align: middle;
@@ -1798,7 +1805,11 @@ a {
   white-space: nowrap;
   text-overflow:ellipsis;
   overflow:hidden;
-  margin: 15px 0px;
+  margin: 10px 0px;
+}
+.sublayer .sublayer-item>label{
+  width: calc(100% - 50px);
+  display: inline-block;
 }
 
 .sublayer-over {

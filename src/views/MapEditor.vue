@@ -366,21 +366,20 @@ export default {
   height: 100%;
   margin:0 auto;
   background-image: url("../../static/images/header.jpg");
-  background-repeat: no-repeat;
-  background-position: -65px -10px;
+  background-repeat: space;
   position:relative;
   min-width: 1000px;
 }
 .base-title{
   float: left;
-  margin-left: 250px;
+  margin-left: 100px;
 }
 .base-title span:first-child{
   color: white;
   font-size: 20px;
 }
 .base-title span:last-child{
-  color: #b1b1b1;
+  color: #f1f1f1;
   font-family: SimHei;
 }
 
