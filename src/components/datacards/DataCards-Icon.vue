@@ -374,7 +374,7 @@ export default {
   height: 80px;
   line-height: 80px;
   position: absolute;
-  padding-right: 62px;
+  padding-right: 60px;
   top: 0;
   right: 0;
   text-align: right;

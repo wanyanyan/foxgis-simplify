@@ -411,7 +411,7 @@ span {
 
 .card-middle {
   float: left;
-  width: 650px;
+  width: calc(100% - 210px);
   height: 80px;
 }
 
@@ -424,7 +424,7 @@ span {
   float: left;
   height: 80px;
   line-height: 80px;
-  padding-right: 62px;
+  padding-right: 60px;
   text-align: right;
   color: #2f80bc;
 }

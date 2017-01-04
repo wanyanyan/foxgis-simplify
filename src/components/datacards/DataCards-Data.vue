@@ -294,7 +294,7 @@ export default {
 
 .card-middle {
   float: left;
-  width: 650px;
+  width: calc(100% - 210px);
   height: 120px;
 }
 
@@ -307,7 +307,7 @@ export default {
   float: left;
   height: 120px;
   line-height: 120px;
-  padding-right: 62px;
+  padding-right: 60px;
   text-align: right;
   color: #2f80bc;
 }

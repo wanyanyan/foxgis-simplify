@@ -126,8 +126,7 @@ export default {
 
       });
     },function(response){
-      loginbutton.disabled = false;
-      this.showError('用户名或密码错误');
+      
     });
   },
   data: function(){
