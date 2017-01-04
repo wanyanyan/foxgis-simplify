@@ -75,15 +75,14 @@ export default {
   height: 64px;
 }
 .header-top .header{
-  width: 1100px;
+  width: 100%;
   height: 100%;
   background-image: url("../../../static/images/header.jpg");
-  background-repeat: no-repeat;
-  background-position: 65px 0px;
+  background-repeat: round;
   margin:0 auto;
 }
 .base-title{
-  float: left;
+  margin-left: 50px;
   line-height: 52px;
 }
 .base-title span{
