@@ -41,49 +41,6 @@ export default {
     /*global componentHandler */
     componentHandler.upgradeElement(this.$el.firstElementChild);
   },
-  login:function(){
-    var url = SERVER_API.users;
-    var username = "geoway";
-    var password = "123456";
-    url += '/'+username;
-    this.$http.post(url,{'username':username,'password':password}).then(function(response){
-      loginbutton.disabled = false;
-      var data = response.data;
-      var access_token = data.access_token;
-      var username = data.username;
-      var name = data.name;
-      var email = data.email;
-      var phone = data.phone;
-      var organization = data.organization;
-      var location = data.location;
-      var role = data.role;
-      var days = 0;
-
-      Cookies.set('access_token',access_token);
-      Cookies.set('username',username);
-      if(name!=undefined){
-        Cookies.set('name',name);
-      }
-      if(email!=undefined){
-        Cookies.set('email',email);
-      }
-      if(phone!=undefined){
-        Cookies.set('phone',phone);
-      }
-      if(location!=undefined){
-        Cookies.set('location',location);
-      }
-      if(organization!=undefined){
-        Cookies.set('organization',organization);
-      }
-      if(role!=undefined){
-        Cookies.set('role',role);
-      }
-    },function(response){
-      loginbutton.disabled = false;
-      this.showError('用户名或密码错误');
-    })
-  },
   attached: function() {
     var url = SERVER_API.users;
     var username = "geoway";
@@ -168,8 +125,7 @@ export default {
 
       });
     },function(response){
-      loginbutton.disabled = false;
-      this.showError('用户名或密码错误');
+      
     });
   },
   data: function(){
