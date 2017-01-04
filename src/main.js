@@ -104,11 +104,6 @@ router.map({
       require(['./views/Studio.vue'], resolve)
     },
     subRoutes: {
-      '/': {
-        component: function (resolve) {
-          require(['./views/studio/Maps.vue'], resolve)
-        }
-      },
       '/maps': {
         component: function (resolve) {
           require(['./views/studio/Maps.vue'], resolve)

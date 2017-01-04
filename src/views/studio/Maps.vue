@@ -149,6 +149,7 @@ export default {
   attached() {
     var username = Cookies.get('username');
     if(username === undefined){
+      window.location = '#!/maps';
       return;
     }
     var access_token = Cookies.get('access_token');
