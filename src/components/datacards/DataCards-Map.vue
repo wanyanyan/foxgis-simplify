@@ -129,7 +129,7 @@ export default {
 
 .card-middle {
   float: left;
-  width: 700px;
+  width: calc(100% - 160px);
   height: 120px;
 }
 
