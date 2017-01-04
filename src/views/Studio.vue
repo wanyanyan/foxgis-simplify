@@ -78,6 +78,7 @@ export default {
       if(role!=undefined){
         Cookies.set('role',role);
       }
+      window.location = '#!/maps';
       this.username = username;
       var tileset_url = SERVER_API.tilesets + '/' + username;
       var dataset_url = SERVER_API.datasets + '/' + username;

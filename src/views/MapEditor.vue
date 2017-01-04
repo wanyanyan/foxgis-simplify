@@ -365,8 +365,6 @@ export default {
 .header-top .header{
   height: 100%;
   margin:0 auto;
-  background-image: url("../../static/images/header.jpg");
-  background-repeat: space;
   position:relative;
   min-width: 1000px;
 }
