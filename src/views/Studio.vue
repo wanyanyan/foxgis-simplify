@@ -2,7 +2,7 @@
 <div>
   <foxgis-layout>
     <div class="mdl-layout mdl-js-layout mdl-layout--fixed-drawer">
-      <div class="mdl-layout__drawer">
+      <div class="mdl-layout__drawer" id="nav_bar">
         <nav class="mdl-navigation">
           <a class="mdl-navigation__link" v-link="{ path: '/maps' }">
             <i class="material-icons">map</i>制图工程<span v-mdl-badge.number="map_nums"></span>
@@ -24,7 +24,7 @@
           </a>
         </nav>
       </div>
-      <div class="mdl-layout__content">
+      <div class="mdl-layout__content" id="layout_content">
         <router-view></router-view>
       </div>
     </div>
