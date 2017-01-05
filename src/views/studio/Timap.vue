@@ -34,7 +34,7 @@ export default {
     }else{
       var iframe = document.createElement("iframe");
       iframe.setAttribute('id',"fatherSVG");
-      iframe.setAttribute('src',"/timap");
+      iframe.setAttribute('src',"http://www.baidu.com");
       iframe.setAttribute('style',"width: 100%; height: 100%;");
       $("#timap-view").append(iframe);
     }
@@ -46,11 +46,14 @@ export default {
 <style scoped>
 .hide_show_btn {
   position: absolute;
-  background-color: #F5EBEB;
+  background-color: #f3f3f3;
   top: 50%;
   cursor: pointer;
   width: 13px;
   height: 60px;
+  border-right: 1px solid #cccccc;
+  border-top: 1px solid #cccccc;
+  border-bottom: 1px solid #cccccc;
   border-bottom-right-radius: 10px;
   border-top-right-radius: 10px;
 }
