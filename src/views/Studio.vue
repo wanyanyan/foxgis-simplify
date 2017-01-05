@@ -19,6 +19,9 @@
           <a class="mdl-navigation__link" v-link="{ path: '/sprites' }">
             <i class="material-icons">place</i>符号库<span v-mdl-badge.number="sprite_nums"></span>
           </a>
+          <a class="mdl-navigation__link" v-link="{ path: '/timap' }">
+            <i class="material-icons">linear_scale</i>时态地图展示
+          </a>
         </nav>
       </div>
       <div class="mdl-layout__content">
@@ -78,7 +81,9 @@ export default {
       if(role!=undefined){
         Cookies.set('role',role);
       }
-      window.location = '#!/maps';
+      if(window.location.hash=="#!/"){
+        window.location = '#!/maps';
+      }
       this.username = username;
       var tileset_url = SERVER_API.tilesets + '/' + username;
       var dataset_url = SERVER_API.datasets + '/' + username;
@@ -168,6 +173,7 @@ export default {
 <style scoped>
 .mdl-layout--fixed-drawer>.mdl-layout__content {
   background-color: #e4e4e4;
+  height: 100%;
 }
 
 .mdl-navigation {

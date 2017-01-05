@@ -21,6 +21,7 @@ import Data from './views/studio/Data'
 import Tile from './views/studio/Tile'
 import Icons from './views/studio/Icons'
 import User from './views/User'
+import Timap from './views/studio/Timap'
 
 import Layout from './components/common/Layout'
 import Search from './components/common/Search'
@@ -127,6 +128,11 @@ router.map({
       '/sprites': {
         component: function (resolve) {
           require(['./views/studio/Icons.vue'], resolve)
+        }
+      },
+      '/timap': {
+        component: function (resolve) {
+          require(['./views/studio/Timap.vue'], resolve)
         }
       }
     }

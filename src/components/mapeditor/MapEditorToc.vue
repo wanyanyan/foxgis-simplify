@@ -39,8 +39,8 @@
             <span>{{layer.id}}</span>
           </label>
           <div class="visibility">
-            <mdl-switch :checked.sync="false" v-if="layer.visibility=='none'" v-on:change='visibilityChange(layer,$index,$event)' data-name="{{name}}" data-type='layout' ></mdl-switch>
-            <mdl-switch :checked.sync="true" v-else v-on:change='visibilityChange(layer,$index,$event)' data-name="{{name}}" data-type='layout' ></mdl-switch>
+            <i class="material-icons" v-if="layer.visibility=='none'" v-on:click='visibilityChange(layer,$index)' data-name="{{name}}" data-type='layout'>visibility_off</i>
+            <i class="material-icons" v-else v-on:click='visibilityChange(layer,$index)' data-name="{{name}}" data-type='layout'>visibility</i>
           </div>
           <div v-if="layer.items!==undefined" class="sublayer" v-show="layer.collapsed==false">
             <div v-for="item in layer.items" title="{{item.id}}" name="{{item.id}}" id="sublayer_{{item.id}}" v-on:dragstart="eledragstart" v-on:dragenter.prevent.stop="eledragenter" class="sublayer-item" draggable="true" v-on:mouseover="sublayerMouseover" v-on:mouseleave="sublayerMouseleave">
@@ -49,8 +49,8 @@
                 <span name="{{item.id}}">{{item.id}}</span>
               </label>
               <div class="visibility">
-                <mdl-switch :checked.sync="false" v-if="item.visibility=='none'" v-on:change='visibilityChange(item,$index,$event)' data-name="{{name}}" data-type='layout' ></mdl-switch>
-                <mdl-switch :checked.sync="true" v-else v-on:change='visibilityChange(item,$index,$event)' data-name="{{name}}" data-type='layout' ></mdl-switch>
+                <i class="material-icons" v-if="item.visibility=='none'" v-on:click='visibilityChange(item,$index)' data-name="{{name}}" data-type='layout'>visibility_off</i>
+                <i class="material-icons" v-else v-on:click='visibilityChange(item,$index)' data-name="{{name}}" data-type='layout'>visibility</i>
               </div>
             </div>
             
@@ -599,9 +599,9 @@ export default {
       this.changeStyle(data);
     },
     //图层可见控制
-    visibilityChange:function(layer,index,e){
+    visibilityChange:function(layer,index){
       var layers = this.styleObj.layers;
-      var value = e.target.checked;
+      var value = layer.visibility === 'visible'?'none':'visible';
       if(layer.items){
         for(let j=0;j<layer.items.length;j++){
           for(let i=0,length=layers.length;i<length;i++){
@@ -609,7 +609,7 @@ export default {
               if(!layers[i].layout){
                 layers[i].layout = {};
               }
-              layers[i].layout.visibility = value?'visible':'none';
+              layers[i].layout.visibility = value;
               break;
             }
           }
@@ -620,7 +620,7 @@ export default {
             if(!layers[i].layout){
               layers[i].layout = {};
             }
-            layers[i].layout.visibility = value?'visible':'none';
+            layers[i].layout.visibility = value;
             break;
           }
         }
@@ -1720,7 +1720,7 @@ export default {
 }
 
 #layer-control .visibility{
-  width: 50px;
+  width: 30px;
   float: right;
 }
 .type-icon:before{
@@ -1784,7 +1784,7 @@ a {
 }
 
 .layer a>label{
-    width: calc(100% - 50px);
+    width: calc(100% - 30px);
     display: inline-block;
 }
 
@@ -1808,7 +1808,7 @@ a {
   margin: 10px 0px;
 }
 .sublayer .sublayer-item>label{
-  width: calc(100% - 50px);
+  width: calc(100% - 30px);
   display: inline-block;
 }
 
