@@ -34,7 +34,7 @@ export default {
     }else{
       var iframe = document.createElement("iframe");
       iframe.setAttribute('id',"fatherSVG");
-      iframe.setAttribute('src',"http://www.baidu.com");
+      iframe.setAttribute('src',"/timap");
       iframe.setAttribute('style',"width: 100%; height: 100%;");
       $("#timap-view").append(iframe);
     }
