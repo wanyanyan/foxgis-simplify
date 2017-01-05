@@ -3179,7 +3179,7 @@ TODOS
 						context.fillStyle = "#ffffff";
 						context.fillRect(0,0,image.width,image.height);
 						context.drawImage(image, 0, 0);
-						var filename = document.getElementById("title_name").innerHTML||"辅助决策用图";
+						var filename = document.getElementById("title_name").innerHTML||"图名";
 						if(imgType==="JPEG"){
 							canvas.toBlob(function(blob) {
 								if(type === "share"){
