@@ -324,8 +324,8 @@ span {
   position: absolute;
   z-index: 2;
   font-size: 14px;
-  right: -53px;
-  top: 80px;
+  right: 22px;
+  top: 100px;
   display: none;
   width: 200px;
   -webkit-animation: pulse 200ms cubic-bezier(0,0,.2,1)forwards;
