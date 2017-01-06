@@ -4,6 +4,10 @@
     <div class="mdl-layout mdl-js-layout mdl-layout--fixed-drawer">
       <div class="mdl-layout__drawer" id="nav_bar">
         <nav class="mdl-navigation">
+          <div style="padding-left: 10px;background: #ccc;">
+            <i class="material-icons">wallpaper</i>
+            <span style="top: -5px;position: relative;">制图</span>
+          </div>
           <a class="mdl-navigation__link" v-link="{ path: '/maps' }">
             <i class="material-icons">map</i>制图工程<span v-mdl-badge.number="map_nums"></span>
           </a>
@@ -19,8 +23,12 @@
           <a class="mdl-navigation__link" v-link="{ path: '/sprites' }">
             <i class="material-icons">place</i>符号库<span v-mdl-badge.number="sprite_nums"></span>
           </a>
+          <div style="padding-left: 10px;background: #ccc;">
+            <i class="material-icons">widgets</i>
+            <span style="top: -5px;position: relative;">时态</span>
+          </div>
           <a class="mdl-navigation__link" v-link="{ path: '/timap' }">
-            <i class="material-icons">linear_scale</i>时态地图展示
+            <i class="material-icons">restore</i>时态地图展示
           </a>
         </nav>
       </div>
