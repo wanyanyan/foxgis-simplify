@@ -357,7 +357,7 @@ export default {
 
 <style scoped>
 .header-top{
-  background-color: #1f57a2;
+  background-color: #18517e;
   height: 25px;
   overflow: hidden;
 }
