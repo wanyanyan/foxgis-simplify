@@ -412,7 +412,7 @@ export default {
   box-sizing: border-box;
   position: absolute;
   top: 25px;
-  background-color: #1F57A2;
+  background-color: #1f57a2;
 }
 
 #main-control img {

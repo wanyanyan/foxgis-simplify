@@ -457,10 +457,8 @@ export default {
           newStyle.layers.push(layers[i]);
         }
       }
-      if(geojson.features.length>0){
-        newStyle.sources["mapbox-gl-draw-cold"] = {type:'geojson',data:geojson};
-        newStyle.sources["mapbox-gl-draw-hot"] = {type:'geojson',data:geojson};
-      }
+      newStyle.sources["mapbox-gl-draw-cold"] = {type:'geojson',data:geojson};
+      newStyle.sources["mapbox-gl-draw-hot"] = {type:'geojson',data:geojson};
       let style_id = newStyle.style_id
       let username = Cookies.get('username')
       if(username === undefined){

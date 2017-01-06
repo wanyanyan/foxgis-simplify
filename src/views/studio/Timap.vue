@@ -1,11 +1,9 @@
 <template>
-<div class="hide_show_btn">
-  <i class="material-icons" title="隐藏" @click="hiddenPanel($event)">keyboard_arrow_left</i>
+<div class="hide_show_btn" @click="hiddenPanel">
+  <i class="material-icons" title="隐藏">keyboard_arrow_left</i>
 </div>
 <div class="data">
   <div id="timap-view"></div>
-  <!-- <iframe src="http://www.baidu.com" width="80%" height="80%"> -->
-  
 </div>
 </template>
 
@@ -13,18 +11,17 @@
 <script>
 export default {
   methods: {
-    hiddenPanel:function(e) {
-      var text = $(e.target).text();
-      if(text === "keyboard_arrow_left"){
-        $(e.target).text("keyboard_arrow_right");
-        $(e.target).attr('title','显示');
-        $("#nav_bar").hide();
-        $("#layout_content").css('margin-left','0px');
+    hiddenPanel:function() {
+      if($("#nav_bar").is(":visible")){
+        $(".hide_show_btn i").text("keyboard_arrow_right");
+        $(".hide_show_btn i").attr('title','显示');
+        $("#nav_bar").fadeOut(200);
+        $("#layout_content").animate({'margin-left':'0px'},200);
       }else{
-        $(e.target).text("keyboard_arrow_left");
-        $(e.target).attr('title','隐藏');
-        $("#nav_bar").show();
-        $("#layout_content").css('margin-left','240px');
+        $(".hide_show_btn i").text("keyboard_arrow_left");
+        $(".hide_show_btn i").attr('title','隐藏');
+        $("#nav_bar").fadeIn(200);
+        $("#layout_content").animate({'margin-left':'240px'},200);
       }
     }
   },
@@ -51,6 +48,7 @@ export default {
   cursor: pointer;
   width: 13px;
   height: 60px;
+  transform: translate(0,-50%);
   border-right: 1px solid #cccccc;
   border-top: 1px solid #cccccc;
   border-bottom: 1px solid #cccccc;
