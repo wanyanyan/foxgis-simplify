@@ -14,9 +14,11 @@
           <a class="mdl-navigation__link" v-link="{ path: '/tile' }">
             <i class="material-icons">layers</i>瓦片集<span v-mdl-badge.number="tileset_nums"></span>
           </a>
+          <!--
           <a class="mdl-navigation__link" v-link="{ path: '/data' }">
             <i class="material-icons">public</i>数据集<span v-mdl-badge.number="dataset_nums"></span>
           </a>
+          -->
           <a class="mdl-navigation__link" v-link="{ path: '/fonts' }">
             <i class="material-icons">text_format</i>字体<span v-mdl-badge.number="font_nums"></span>
           </a>

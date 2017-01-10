@@ -169,7 +169,7 @@ export default {
     },
     printMap: function(e){  
       if(e.target.textContent === '输出'){
-        this.$emit("map-view-change","hide");
+        //this.$emit("map-view-change","hide");
         $("#property-panel").hide();
         if(this.selectedDistrictBounds.length!=0){
           var bounds = {
@@ -327,7 +327,7 @@ export default {
       this.selectedDistrictBounds = options.bounds;
       this.$broadcast('map-bounds-change',options);
     },
-    "map-view-change":function(action){
+    /*"map-view-change":function(action){
       if(action==="hide"){
         document.getElementById("map-dataview-container").style.visibility="hidden";
         return;
@@ -339,7 +339,7 @@ export default {
         document.getElementById("map-dataview-container").style.visibility="visible";
         this.$broadcast("datamap-init",params);
       } 
-    }
+    }*/
   },
   watch:{
     style: {
