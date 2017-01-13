@@ -358,9 +358,9 @@ export default {
       var newLayerPanel = $("#new-layer-panel");
       if(newLayerPanel.is(":visible")){
         newLayerPanel.hide();
-        this.$dispatch("map-view-change","hide");
+        //this.$dispatch("map-view-change","hide");
       }else{
-        this.$dispatch("map-view-change","show");
+        //this.$dispatch("map-view-change","show");
         newLayerPanel.show();
         this.selectedData={
           'panel_type':'create',
@@ -395,11 +395,11 @@ export default {
         e.target.className = claName;
         $(".style-set").css("display","none");
         if($(e.target).hasClass("data")){
-          this.$dispatch("map-view-change","show");
+          //this.$dispatch("map-view-change","show");
           $("#data-div").css("display","block");
         }
         if($(e.target).hasClass("style")){
-          this.$dispatch("map-view-change","hide");
+          //this.$dispatch("map-view-change","hide");
           $("#style-div").css("display","block");
         }
       }else if(e.target.parentElement.id==="symbol-property-control"){
@@ -962,7 +962,7 @@ export default {
       }
     },
     createPanelClose:function(){
-      this.$dispatch("map-view-change","hide");
+      //this.$dispatch("map-view-change","hide");
       $("#new-layer-panel input[name='id']").val("new_layer");
       $("#new-layer-panel select[name='source']").val("");
       $("#new-layer-panel select[name='source-layer']").val("");

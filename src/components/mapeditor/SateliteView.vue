@@ -37,7 +37,7 @@
 
 <script>
 import mapboxgl from 'mapbox-gl/dist/mapbox-gl.js'
-import MapboxDraw from 'gl-draw-foxgis'
+import MapboxDraw from 'gl-draw-foxgis/dist/gl-draw-foxgis.js'
 import { diff, validate} from 'mapbox-gl-style-spec'
 import { changeStyle } from '../../vuex/actions'
 import Cookies from 'js-cookie'
@@ -252,12 +252,12 @@ export default {
         controlBox.style.width = prb.x - plt.x + 'px'
         controlBox.style.height = prb.y - plt.y + 'px'
       }
-      let center = this.map.getCenter()
+      /*let center = this.map.getCenter()
       let zoom = this.map.getZoom()
       this.localStyle.center = [center.lng,center.lat]
       this.localStyle.zoom = zoom
       let data = JSON.parse(JSON.stringify(this.localStyle))
-      this.changeStyle(data)
+      this.changeStyle(data)*/
     },
     mapDragStart: function(e){
       this.drag.dragstartx = e.originalEvent.offsetX - this.mapBound.left
@@ -311,7 +311,7 @@ export default {
       map.on('click', this.singleClick);
       map.on('dblclick', this.doubleClick);
       map.on('drag', this.mapDrag);
-      map.on('dragend', this.mapDragEnd);
+      //map.on('dragend', this.mapDragEnd);
       map.on('zoomend',this.mapZoomEnd);
       map.on("load",this.mapLoaded);
     },
@@ -450,6 +450,8 @@ export default {
     },
     'style-save':function(style){
       var newStyle = JSON.parse(JSON.stringify(style));
+      newStyle.zoom = this.map.getZoom();
+      newStyle.center = this.map.getCenter();
       var layers = this.map.getStyle().layers;
       var geojson = this.draw.getAll();
       for(let i=0;i<layers.length;i++){

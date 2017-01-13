@@ -169,7 +169,7 @@ export default {
     },
     printMap: function(e){  
       if(e.target.textContent === '输出'){
-        this.$emit("map-view-change","hide");
+        //this.$emit("map-view-change","hide");
         $("#property-panel").hide();
         if(this.selectedDistrictBounds.length!=0){
           var bounds = {
@@ -264,7 +264,7 @@ export default {
     }
     var username = Cookies.get('username');
     if(username === undefined){
-      window.location.href = "#!/login";
+      window.location.href = "#!/";
     }
     this.styleSaveStatus = true;
     var access_token = Cookies.get('access_token');
@@ -327,7 +327,7 @@ export default {
       this.selectedDistrictBounds = options.bounds;
       this.$broadcast('map-bounds-change',options);
     },
-    "map-view-change":function(action){
+    /*"map-view-change":function(action){
       if(action==="hide"){
         document.getElementById("map-dataview-container").style.visibility="hidden";
         return;
@@ -339,7 +339,7 @@ export default {
         document.getElementById("map-dataview-container").style.visibility="visible";
         this.$broadcast("datamap-init",params);
       } 
-    }
+    }*/
   },
   watch:{
     style: {
