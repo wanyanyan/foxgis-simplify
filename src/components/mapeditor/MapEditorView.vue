@@ -255,12 +255,12 @@ export default {
         controlBox.style.width = prb.x - plt.x + 'px';
         controlBox.style.height = prb.y - plt.y + 'px';
       }
-      var center = this.map.getCenter();
+      /*var center = this.map.getCenter();
       var zoom = this.map.getZoom();
       this.localStyle.center = [center.lng,center.lat];
       this.localStyle.zoom = zoom;
       var data = JSON.parse(JSON.stringify(this.localStyle));
-      this.changeStyle(data);
+      this.changeStyle(data);*/
     },
     mapDragStart: function(e){
       this.drag.dragstartx = e.originalEvent.offsetX - this.mapBound.left;
@@ -306,7 +306,7 @@ export default {
       this.map = map;
       map.on('click', this.mapClick);
       map.on('drag', this.mapDrag);
-      map.on('dragend', this.mapDragEnd);
+      //map.on('dragend', this.mapDragEnd);
       map.on('zoomend',this.mapZoomEnd);
     },
     // 给定 admin code，返回 admin 级别
@@ -421,14 +421,13 @@ export default {
     },
     'style-save':function(style){
       var newStyle = JSON.parse(JSON.stringify(style));
-      let style_id = newStyle.style_id
-      let username = Cookies.get('username')
-      if(username === undefined){
-        window.location.href = "#!/login";
-      }
-      let access_token = Cookies.get('access_token')
-      let url = SERVER_API.styles + '/' + username + '/' + style_id
-      let data = JSON.stringify(newStyle)
+      var style_id = newStyle.style_id;
+      newStyle.zoom = this.map.getZoom();
+      newStyle.center = this.map.getCenter();
+      var username = Cookies.get('username');
+      var access_token = Cookies.get('access_token');
+      var url = SERVER_API.styles + '/' + username + '/' + style_id;
+      var data = JSON.stringify(newStyle);
       this.$http({url:url,method:'PATCH',data:data,headers:{'x-access-token':access_token}})
       .then(function(response){
         if(response.ok){

@@ -264,7 +264,7 @@ export default {
     }
     var username = Cookies.get('username');
     if(username === undefined){
-      window.location.href = "#!/login";
+      window.location.href = "#!/";
     }
     this.styleSaveStatus = true;
     var access_token = Cookies.get('access_token');

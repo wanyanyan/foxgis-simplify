@@ -27,7 +27,7 @@
           </a>
           <div style="padding-left: 10px;background: #ccc;">
             <i class="material-icons">widgets</i>
-            <span style="top: -5px;position: relative;">时态</span>
+            <span style="top: -5px;position: relative;">地图展示</span>
           </div>
           <a class="mdl-navigation__link" v-link="{ path: '/timap' }">
             <i class="material-icons">restore</i>时态地图展示
