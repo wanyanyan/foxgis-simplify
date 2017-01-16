@@ -451,7 +451,8 @@ export default {
     'style-save':function(style){
       var newStyle = JSON.parse(JSON.stringify(style));
       newStyle.zoom = this.map.getZoom();
-      newStyle.center = this.map.getCenter();
+      var center = this.map.getCenter();
+      newStyle.center = [center.lng,center.lat];
       var layers = this.map.getStyle().layers;
       var geojson = this.draw.getAll();
       for(let i=0;i<layers.length;i++){

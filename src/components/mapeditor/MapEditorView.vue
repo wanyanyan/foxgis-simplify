@@ -387,7 +387,8 @@ export default {
       var newStyle = JSON.parse(JSON.stringify(style));
       var style_id = newStyle.style_id;
       newStyle.zoom = this.map.getZoom();
-      newStyle.center = this.map.getCenter();
+      var center = this.map.getCenter();
+      newStyle.center = [center.lng,center.lat];
       var username = Cookies.get('username');
       var access_token = Cookies.get('access_token');
       var url = SERVER_API.styles + '/' + username + '/' + style_id;
