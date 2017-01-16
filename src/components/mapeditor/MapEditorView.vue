@@ -103,7 +103,7 @@ export default {
           }
         }
         infoContainer.style.display = 'block';
-        infoContainer.style.left = e.point.x-124 + 'px';
+        infoContainer.style.left = e.point.x-155 + 'px';
         var h = (this.selectedPopLayer.length - 1)*27;
         infoContainer.style.top = e.point.y-132-h+'px';
       }
@@ -678,7 +678,7 @@ export default {
 }
 
 .map-popup {
-  width: 250px;
+  width: 310px;
   cursor: default;
 }
 
@@ -706,7 +706,7 @@ export default {
   margin: 6px 0 0 10px;
 }
 .identify-layer select {
-  width: 160px;
+  width: 210px;
   height: 24px;
   line-height: 24px;
   font-weight: bold;
