@@ -2,23 +2,36 @@
   <div id='map-editorview-container'>
     <mdl-snackbar display-on="mailSent"></mdl-snackbar>
     <div id='info-container'>
-      <div style="padding:10px;background-color: white;border-radius:4px">
-        <div id="layer-container">
-          <div v-for="(layer,meta) in querySourceLayers" class="layer">
-            <i class='material-icons' v-if="meta.type=='Point'||meta.type=='MultiPoint'">grade</i>
-            <i class='material-icons' v-if="meta.type=='LineString'||meta.type=='MultiLineString'">remove</i>
-            <i class='material-icons' v-if="meta.type=='Polygon'||meta.type=='MultiPolygon'">filter_b_and_w</i>
-            <span style="font-weight:bold;font-size: 14px;position: relative;bottom: 2px;">{{layer}}</span></br>
-            <div v-for="(key,value) in meta.properties" style="margin-left:5px;font-size:12px;">
-              <span>{{key}}:</span>
-              <span style="color:gray;">{{value}}</span>
+      <div class="map-popup">
+        <div class="popup-tit">
+          <h3>查询结果</h3>
+        </div>
+        <div class="popup-con">
+          <div class="identify-layer">
+            图层：<select id="pop-identify-select" @change="layerSelect($event)">
+              <option value="{{layer}}" v-for="(layer,meta) in querySourceLayers">{{layer}}</option>
+            </select>
+          </div>
+          <div class="identify-content">
+            <div style="position: relative; overflow: hidden; width: auto; height: 100%;">
+              <div class="identify-table">
+                <table>
+                  <tbody>
+                    <tr v-for="(key,value) in selectedPopLayer.properties">
+                      <td class="item-name">{{key}}</td>
+                      <td class="item-value">{{value}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
         </div>
-      </div> 
-      <div id='info-tip'></div>
-      <i class="material-icons" id="close-info" v-on:click="closeInfoContainer">clear</i>
+        <div id='info-tip'></div>
+        <i class="material-icons" id="close-info" v-on:click="closeInfoContainer">clear</i>
+      </div>
     </div>
+
     <div id="location-control" style='display:none' v-on:mousedown="boxDragStart" v-on:mouseup="boxDragEnd">
       <div class="dragmove" v-on:mousedown="boxMoveStart"></div>
       <div class="dragresize dragresize-lt" v-on:mousedown="dragresizedown"></div>
@@ -60,6 +73,8 @@ export default {
       var northEast = {x:e.point.x+clickBuffer,y:e.point.y-clickBuffer};
       var features = this.map.queryRenderedFeatures([southWest,northEast]);
       this.querySourceLayers = {};
+      this.selectedPopLayer.properties = {};
+      this.selectedPopLayer.length = 0;
       var sourceLayers = {};
       if(features.length===0){
         infoContainer.style.display = 'none';
@@ -78,17 +93,36 @@ export default {
       }
       this.querySourceLayers = sourceLayers;
       if(Object.keys(this.querySourceLayers).length>0){
-        var containerHeight = 20;//padding值
+        var i = 0;
         for(var layer in this.querySourceLayers){
-          var c = Object.keys(this.querySourceLayers[layer].properties).length;
-          containerHeight += (c+1)*20;
+          if(i === 0){
+            $("#pop-identify-select").val(layer);
+            this.selectedPopLayer.properties = this.querySourceLayers[layer].properties;
+            this.selectedPopLayer.length = Object.keys(this.querySourceLayers[layer].properties).length;
+            i++;
+          }
         }
-        if(containerHeight>300){containerHeight=300;}
         infoContainer.style.display = 'block';
-        infoContainer.style.left = e.point.x-94 + 'px';
-        infoContainer.style.top = e.point.y-containerHeight-17 + 'px';
+        infoContainer.style.left = e.point.x-124 + 'px';
+        var h = (this.selectedPopLayer.length - 1)*27;
+        infoContainer.style.top = e.point.y-132-h+'px';
       }
-      //this.querySourceLayers = features;
+    },
+    layerSelect: function(e){
+      var length = this.selectedPopLayer.length;
+      var layerName = e.target.value;
+      if(Object.keys(this.querySourceLayers).length>0){
+        for(var layer in this.querySourceLayers){
+          if(layer === layerName){
+            this.selectedPopLayer.properties = this.querySourceLayers[layer].properties;
+            this.selectedPopLayer.length = Object.keys(this.querySourceLayers[layer].properties).length;
+            break;
+          }
+        }
+      }
+      var infoContainer = document.getElementById('info-container');
+      var c = (length - this.selectedPopLayer.length)*27;
+      infoContainer.style.top = Number(infoContainer.style.top.split('px')[0]) + c + 'px' ;
     },
     // 点击时，绑定事件
     dragresizedown: function(e){
@@ -437,6 +471,10 @@ export default {
         nw: [0,0],
         se: [0,0],
         dragButton:''
+      },
+      selectedPopLayer:{
+        properties:{},
+        length:0
       }
     }
   },
@@ -527,47 +565,6 @@ export default {
   box-sizing: border-box;
 }
 
-#info-container {
-  display: none;
-  position: absolute;
-  left: 500px;
-  top: 300px;
-  z-index: 1;
-}
-
-#layer-container {
-  width: 170px;
-  max-height: 295px;
-  overflow: auto;
-}
-
-
-.layer {
-  font-size: 16px;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  overflow-x: hidden;
-}
-
-.layer i {
-  font-size: 1px;
-  line-height: 16px;
-}
-
-.layer span {
-  display: inline-block;
-  line-height: 21px;
-}
-
-#info-tip {
-  width: 0;
-  height: 0;
-  border-left: 7px solid transparent;
-  border-right: 7px solid transparent;
-  border-top: 7px solid white;
-  margin: 0 auto;
-}
-
 /* box bounds */
 #location-control {
   position: absolute;
@@ -654,6 +651,96 @@ export default {
 
 .dragmove:hover{
   cursor: move;
+}
+/******************图层弹框样式*******************************/
+#info-container {
+  display: none;
+  position: absolute;
+  left: 500px;
+  top: 300px;
+  z-index: 1;
+  -webkit-filter: drop-shadow(0 1px 4px rgba(0,0,0,.6));
+  -moz-filter: drop-shadow(0 1px 4px rgba(0,0,0,.6));
+  -ms-filter: drop-shadow(0 1px 4px rgba(0,0,0,.6));
+  -o-filter: drop-shadow(0 1px 4px rgba(0,0,0,.6));
+  filter: drop-shadow(0 1px 4px rgba(0,0,0,.6));
+  height: auto;
+  width: auto;
+}
+
+#info-tip {
+  width: 0;
+  height: 0;
+  border-left: 7px solid transparent;
+  border-right: 7px solid transparent;
+  border-top: 7px solid white;
+  margin: 0 auto;
+}
+
+.map-popup {
+  width: 250px;
+  cursor: default;
+}
+
+.popup-tit {
+  height: 30px;
+  line-height: 30px;
+  border-bottom: 1px solid #eee;
+  padding: 0 10px;
+  position: relative;
+  width: auto;
+  border-color: #ccc;
+  background-color: #e9f1f9;
+}
+.popup-tit h3 {
+  font-size: 14px;
+  margin:0;
+}
+.popup-con {
+  position: relative;
+  padding: 10px;
+  background-color: #fff;
+}
+.identify-layer {
+  height: 24px;
+  margin: 6px 0 0 10px;
+}
+.identify-layer select {
+  width: 160px;
+  height: 24px;
+  line-height: 24px;
+  font-weight: bold;
+  color: #478edd;
+  margin-left: 6px;
+}
+.identify-content {
+  padding: 8px;
+}
+.identify-table {
+  float: right;
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  width: 100%;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  padding: 0;
+  width: 100%;
+}
+.identify-table .item-name {
+  width: 90px;
+  word-break: break-all;
+  padding: 3px;
+  background-color: #c6deff;
+}
+.identify-table td {
+  border: 1px solid #ccc;
+}
+.identify-table .item-value {
+  word-break: break-all;
+  padding: 3px;
 }
 
 </style>
