@@ -93,21 +93,19 @@ export default {
       }
       this.querySourceLayers = sourceLayers;
       if(Object.keys(this.querySourceLayers).length>0){
-        var containerHeight = 20;//padding值
-        var layerName = document.getElementById("pop-identify-select").value;
-        if(layerName){
-          this.selectedPopLayer.properties = this.querySourceLayers[layerName].properties;
-          this.selectedPopLayer.length = Object.keys(this.querySourceLayers[layerName].properties).length;
-        }
+        var i = 0;
         for(var layer in this.querySourceLayers){
-          var c = Object.keys(this.querySourceLayers[layer].properties).length;
-          containerHeight += (c+1)*20;
+          if(i === 0){
+            $("#pop-identify-select").val(layer);
+            this.selectedPopLayer.properties = this.querySourceLayers[layer].properties;
+            this.selectedPopLayer.length = Object.keys(this.querySourceLayers[layer].properties).length;
+            i++;
+          }
         }
-        if(containerHeight>300){containerHeight=300;}
         infoContainer.style.display = 'block';
         infoContainer.style.left = e.point.x-124 + 'px';
-        var h = (6 - this.selectedPopLayer.length)*27;
-        infoContainer.style.top = e.point.y-containerHeight-87+h+'px';
+        var h = (this.selectedPopLayer.length - 1)*27;
+        infoContainer.style.top = e.point.y-132-h+'px';
       }
     },
     layerSelect: function(e){
