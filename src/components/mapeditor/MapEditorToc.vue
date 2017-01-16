@@ -159,14 +159,22 @@
                 <i class="material-icons open-stops" data-name="{{name}}" data-type="paint" v-on:click="openStopsPanel">timeline</i>
               </div>
             </div>
-            <div class="paint-property prop-group">
+            <div class="layout-property prop-group">
               <div class="text"><span>输出属性</span></div>
               <div v-for="(name,value) in propertyGroup.icon.layout" class="property-item">
                 <div class="property-name"><span >{{translate[name.replace(curPanelLayer.type+'-','')]}}</span></div>
-                <div class="property-value" v-if="name.indexOf('color')==-1&&name!=='icon-allow-overlap'&&name!=='icon-ignore-placement'">
+                <div class="property-value" v-if="name.indexOf('color')==-1&&name!=='icon-allow-overlap'&&name!=='icon-ignore-placement'&&name!=='icon-text-fit'">
                   <input type="text" :value="value" name="{{name}}" v-if="name==='icon-image'" v-on:change='propertyChange' v-on:click='onShowIconPanel' data-type='layout'/>
                   <input type="text" :value="value" name="{{name}}" v-else v-on:change='propertyChange' data-type='layout'/>
                   <label class="label">{{units[name.replace(curPanelLayer.type+'-','')]}}</label>
+                </div>
+                <div class="property-value" v-if="name=='icon-text-fit'">
+                  <select v-model="value" v-on:change='propertyChange' name="{{name}}" data-type='layout'>
+                    <option value="none">无</option>
+                    <option value="width">宽度</option>
+                    <option value="height">高度</option>
+                    <option value="both">宽度和高度</option>
+                  </select>
                 </div>
                 <div class="property-value" v-if="name=='icon-allow-overlap'||name=='icon-ignore-placement'">
                   <mdl-switch :checked.sync="true" v-if="value==true" v-on:change='propertyChange' data-name="{{name}}" data-type='layout' ></mdl-switch>

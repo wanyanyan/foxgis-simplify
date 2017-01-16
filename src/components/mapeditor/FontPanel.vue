@@ -12,7 +12,7 @@
         
         <div class="font-item"  v-for="font in fonts" title="{{font.name}}" style="display:none;">
           <i class="material-icons">title</i>
-          <img :src="font.previewUrl" title="{{font.name}}" style="width:calc(100% - 25px);">
+          <span title="{{font.name}}" style="width:calc(100% - 25px);">{{font.name}}</span>
         </div>
       </div>  
     </div>

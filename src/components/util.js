@@ -48,5 +48,5 @@ export default {
     }
     return "#"+str;
   },
-  systemSourceIds:[]
+  systemSourceIds:["gw_postgis","gw_admin","gw_timeline"]
 }
