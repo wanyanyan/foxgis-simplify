@@ -104,12 +104,14 @@ export default {
         }
         infoContainer.style.display = 'block';
         infoContainer.style.left = e.point.x-155 + 'px';
-        var h = (this.selectedPopLayer.length - 1)*27;
-        infoContainer.style.top = e.point.y-132-h+'px';
+        var h = (this.selectedPopLayer.length)*27+16;
+        if(h>300){h = 300;}
+        infoContainer.style.top = e.point.y-87-h+'px';
       }
     },
     layerSelect: function(e){
-      var length = this.selectedPopLayer.length;
+      var infoContainer = document.getElementById('info-container');
+      var oldHeight = infoContainer.offsetHeight;
       var layerName = e.target.value;
       if(Object.keys(this.querySourceLayers).length>0){
         for(var layer in this.querySourceLayers){
@@ -120,9 +122,11 @@ export default {
           }
         }
       }
-      var infoContainer = document.getElementById('info-container');
-      var c = (length - this.selectedPopLayer.length)*27;
-      infoContainer.style.top = Number(infoContainer.style.top.split('px')[0]) + c + 'px' ;
+      var h = (this.selectedPopLayer.length)*27+16;
+      if(h>300){h = 300;}
+      var newHeight = h+87;
+      var c = newHeight - oldHeight;
+      infoContainer.style.top = Number(infoContainer.style.top.split('px')[0]) - c + 'px' ;
     },
     // 点击时，绑定事件
     dragresizedown: function(e){
@@ -730,7 +734,7 @@ table {
   width: 100%;
 }
 .identify-table .item-name {
-  width: 90px;
+  width: 120px;
   word-break: break-all;
   padding: 3px;
   background-color: #c6deff;
