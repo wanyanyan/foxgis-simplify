@@ -38,7 +38,7 @@
           <div class="source-header">
             <i class="material-icons">layers</i>
             <b>{{source.name}}</b>
-            <span v-if="systemSourceIds.indexOf(source.id)!==-1">系统数据</span>
+            <span v-if="source.owner==='geoway'">系统数据</span>
             <span v-else>{{source.owner}} · {{source.createdAt}}</span>
           </div>
           <div class="source-detail">
@@ -63,7 +63,7 @@
           <div class="source-header">
             <i class="material-icons">layers</i>
             <b>{{source.name}}</b>
-            <span v-if="systemSourceIds.indexOf(source.id)!==-1">系统数据</span>
+            <span v-if="source.owner==='geoway'">系统数据</span>
             <span v-else>{{source.owner}} · {{source.createdAt}}</span>
           </div>
           <div class="source-detail">
@@ -197,12 +197,8 @@ export default {
   data(){
     return {
       searchKeyWords:"",
-      tileCopyStatus:[],//上传数据切片状态
-      systemSourceIds:[]
+      tileCopyStatus:[]//上传数据切片状态
     }
-  },
-  attached(){
-    this.systemSourceIds = util.systemSourceIds;
   },
   computed:{
     displaySources:function(){

@@ -12,6 +12,7 @@ import VueMdl from 'vue-mdl'
 
 import App from './views/App'
 import Studio from './views/Studio'
+import Login from './views/Login'
 import MapEditor from './views/MapEditor'
 import DataEditor from './views/DataEditor'
 
@@ -102,9 +103,24 @@ router.map({
   },
   '/': {
     component: function (resolve) {
+      require(['./views/Login.vue'], resolve)
+    }
+  },
+  '/login': {
+    component: function (resolve) {
+      require(['./views/Login.vue'], resolve)
+    }
+  },
+  '/studio': {
+    component: function (resolve) {
       require(['./views/Studio.vue'], resolve)
     },
     subRoutes: {
+      '/': {
+        component: function (resolve) {
+          require(['./views/studio/Maps.vue'], resolve)
+        }
+      },
       '/maps': {
         component: function (resolve) {
           require(['./views/studio/Maps.vue'], resolve)

@@ -369,7 +369,7 @@ export default {
           this.usedSourceIds.push(id);
         }
       }
-      this.getSystemSources();//获取系统的数据
+      //this.getSystemSources();//获取系统的数据
       this.getPublicSources();//获取公开的数据
       this.$el.querySelector('.data-select-panel').style.display="block";
     },
@@ -411,14 +411,14 @@ export default {
       },function(res){});
       this.sources.push(source);
     },
-    getSystemSources:function(){
+    /*getSystemSources:function(){
       var access_token = Cookies.get('access_token');
       var systemSourceIds = util.systemSourceIds;//暂时不加admin
       for(let i = 0;i<systemSourceIds.length;i++){
         var url = SERVER_API.tilesets+"/geoway/"+systemSourceIds[i];
         this.getSource(systemSourceIds[i],url);
       }
-    },
+    },*/
     getPublicSources:function(){
       var access_token = Cookies.get('access_token');
       var url = SERVER_API.tilesets;

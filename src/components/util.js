@@ -48,5 +48,32 @@ export default {
     }
     return "#"+str;
   },
-  systemSourceIds:["gw_postgis","gw_admin","gw_timeline"]
+  parseUrl:function(url) {  
+    var a =  document.createElement('a');  
+    a.href = url;  
+    return {  
+      source: url,  
+      protocol: a.protocol.replace(':',''),  
+      host: a.hostname,  
+      port: a.port,  
+      query: a.search,  
+      params: (function(){  
+        var ret = {},  
+        seg = a.search.replace(/^\?/,'').split('&'),  
+        len = seg.length, i = 0, s;  
+        for (;i<len;i++) {  
+            if (!seg[i]) { continue; }  
+            s = seg[i].split('=');  
+            ret[s[0]] = s[1];  
+        }  
+        return ret;  
+      })(),  
+      file: (a.pathname.match(/\/([^\/?#]+)$/i) || [,''])[1],  
+      hash: a.hash.replace('#',''),  
+      path: a.pathname.replace(/^([^\/])/,'/$1'),  
+      relative: (a.href.match(/tps?:\/\/[^\/]+(.+)/) || [,''])[1],  
+      segments: a.pathname.replace(/^\//,'').split('/')  
+    };  
+  }
+  //systemSourceIds:["gw_admin_national","gw_admin_national2","gw_timeline_national_base","gw_timeline_national_water_living","gw_timeline_national_roads","gw_timeline_national_terrain","gw_increase_national","gw_increase_national2","gw_admin","gw_timeline2","gw_increase"]
 }

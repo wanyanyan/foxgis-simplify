@@ -8,10 +8,10 @@
             <i class="material-icons">wallpaper</i>
             <span style="top: -5px;position: relative;">制图</span>
           </div>
-          <a class="mdl-navigation__link" v-link="{ path: '/maps' }">
+          <a class="mdl-navigation__link" v-link="{ path: '/studio/maps' }">
             <i class="material-icons">map</i>制图工程<span v-mdl-badge.number="map_nums"></span>
           </a>
-          <a class="mdl-navigation__link" v-link="{ path: '/tile' }">
+          <a class="mdl-navigation__link" v-link="{ path: '/studio/tile' }">
             <i class="material-icons">layers</i>瓦片集<span v-mdl-badge.number="tileset_nums"></span>
           </a>
           <!--
@@ -19,17 +19,17 @@
             <i class="material-icons">public</i>数据集<span v-mdl-badge.number="dataset_nums"></span>
           </a>
           -->
-          <a class="mdl-navigation__link" v-link="{ path: '/fonts' }">
+          <a class="mdl-navigation__link" v-link="{ path: '/studio/fonts' }">
             <i class="material-icons">text_format</i>字体<span v-mdl-badge.number="font_nums"></span>
           </a>
-          <a class="mdl-navigation__link" v-link="{ path: '/sprites' }">
+          <a class="mdl-navigation__link" v-link="{ path: '/studio/sprites' }">
             <i class="material-icons">place</i>符号库<span v-mdl-badge.number="sprite_nums"></span>
           </a>
           <div style="padding-left: 10px;background: #ccc;">
             <i class="material-icons">widgets</i>
             <span style="top: -5px;position: relative;">地图展示</span>
           </div>
-          <a class="mdl-navigation__link" v-link="{ path: '/timap' }">
+          <a class="mdl-navigation__link" v-link="{ path: '/studio/timap' }">
             <i class="material-icons">restore</i>时态地图展示
           </a>
         </nav>
@@ -55,7 +55,7 @@ export default {
     componentHandler.upgradeElement(this.$el.firstElementChild);
   },
   attached: function() {
-    var url = SERVER_API.users;
+    /*var url = SERVER_API.users;
     var username = "geoway";
     var password = "123456";
     url += '/'+username;
@@ -142,6 +142,69 @@ export default {
       });
     },function(response){
       
+    });*/
+    var username = Cookies.get('username');
+    if(username === undefined){
+      var hash = window.location.href.split("#!")[1];
+      window.location.href = "#!/login?hash="+hash;
+      return;
+    }else{
+      this.username = username;
+    }
+    var access_token = Cookies.get('access_token');
+    var tileset_url = SERVER_API.tilesets + '/' + username;
+    var dataset_url = SERVER_API.datasets + '/' + username;
+    var fonts_url = SERVER_API.fonts + '/' + username;
+    var sprites_url = SERVER_API.sprites + '/' + username;
+    var uploads_url = SERVER_API.uploads + '/' + username;
+    var maps_url = SERVER_API.styles+'/' + username;
+
+    this.$http({url: maps_url, method: 'GET', headers: { 'x-access-token': access_token } })
+    .then(function(response) {
+      var data = response.data;
+      this.map_nums = data.length;
+    },function(response){
+
+    });
+
+    this.$http({url: tileset_url, method: 'GET', headers: {'x-access-token': access_token}})
+    .then(function(response) {
+      var data = response.data;
+      this.tileset_nums = data.length;
+    },function(response){
+
+    });
+
+    this.$http({url: dataset_url, method: 'GET', headers: {'x-access-token': access_token}})
+    .then(function(response) {
+      var data = response.data;
+      this.dataset_nums = data.length;
+    },function(response){
+
+    });
+
+    this.$http({url: fonts_url, method: 'GET', headers: {'x-access-token': access_token}})
+    .then(function(response) {
+      var data = response.data;
+      this.font_nums = data.length;
+    },function(response){
+
+    });
+
+    this.$http({url: sprites_url, method: 'GET', headers: {'x-access-token': access_token}})
+    .then(function(response) {
+      var data = response.data;
+      this.sprite_nums = data.length;
+    },function(response){
+
+    });
+
+    this.$http({url: uploads_url, method: 'GET', headers: {'x-access-token':access_token}})
+    .then(function(response) {
+      var data = response.data;
+      this.upload_nums = data.length;
+    },function(response){
+
     });
   },
   data: function(){

@@ -54,6 +54,7 @@
 import mapboxgl from 'mapbox-gl/dist/mapbox-gl.js';
 import { diff, validate} from 'mapbox-gl-style-spec'
 import { changeStyle } from '../../vuex/actions'
+import util from '../util.js'
 import Cookies from 'js-cookie'
 export default {
   vuex: {
@@ -306,10 +307,21 @@ export default {
       });
       map.addControl(new mapboxgl.NavigationControl());
       this.map = map;
+      
+      map.on('load',this.mapLoaded);
       map.on('click', this.mapClick);
       map.on('drag', this.mapDrag);
       //map.on('dragend', this.mapDragEnd);
       map.on('zoomend',this.mapZoomEnd);
+    },
+    mapLoaded:function(e){
+      var href = window.location.href.replace("/#!","");
+      var params = util.parseUrl(href).params;
+      var bbox = params.bbox;
+      if(bbox){
+        var bounds = bbox.split(",");
+        this.map.fitBounds([[Number(bounds[0]),Number(bounds[1])],[Number(bounds[2]),Number(bounds[3])]],{linear:true,maxzoom:14});
+      }
     },
     // 给定 admin code，返回 admin 级别
     // 省市县的 admin code 是6位格式，乡镇为8位格式
@@ -419,7 +431,7 @@ export default {
         var info = this.$el.querySelector("#info-container");
         info.style.display = 'none';
       }
-      window.location.href = "#!/maps";
+      window.location.href = "#!/studio/maps";
     },
     'style-save':function(style){
       var newStyle = JSON.parse(JSON.stringify(style));

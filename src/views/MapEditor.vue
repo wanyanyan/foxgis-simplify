@@ -255,16 +255,16 @@ export default {
     var urlhash = window.location.hash.split("?")[0];
     var styleId = urlhash.replace(/.*mapeditor\/(\w*)/,'$1');
     this.styleId = styleId;
-    var params = window.location.href.split("?")[1].split("&");
-    for(var i = 0;i<params.length;i++){
-      if(params[i].split("=")[0]==="type"){
-        this.mapType = params[i].split("=")[1];
-        break;
-      }
-    }
+
+    var href = window.location.href.replace("/#!","");
+    var params = util.parseUrl(href).params;
+    this.mapType = params.type;
+    
     var username = Cookies.get('username');
     if(username === undefined){
-      window.location.href = "#!/";
+      var hash = window.location.href.split("#!")[1];
+      window.location.href = "#!/login?hash="+hash;
+      return;
     }
     this.styleSaveStatus = true;
     var access_token = Cookies.get('access_token');
